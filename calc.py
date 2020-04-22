@@ -1,5 +1,5 @@
 from tkinter import *
-
+from math import *
 root = Tk()
 root.title("Simple Calculator")
 root.resizable(False, False)
@@ -47,6 +47,31 @@ def button_div():
     f_num = float(num1)
     e.delete(0, END)
 
+def button_sqrt():
+    num1 = e.get()
+    global f_num
+    f_num = float(num1)
+    e.delete(0, END)
+    if f_num > 0:
+        e.insert(0, sqrt(f_num))
+    else:
+        e.insert(0, "ERROR")
+
+def button_cuberoot():
+    num1 = e.get()
+    global f_num
+    f_num = float(num1)
+    e.delete(0, END)
+    e.insert(0, (f_num**(1/3)))
+
+def button_exp():
+    num1 = e.get()
+    global f_num
+    global op
+    op = "exp"
+    f_num = float(num1)
+    e.delete(0, END)
+
 def button_equal():
     num2 = e.get()
     e.delete(0, END)
@@ -56,8 +81,10 @@ def button_equal():
         e.insert(0, f_num - float(num2))
     elif op=="mul":
         e.insert(0, f_num * float(num2))
-    else:
+    elif op=="div":
         e.insert(0, f_num / float(num2))
+    else:
+        e.insert(0, f_num ** float(num2))
 
 #define buttons
 b1 = Button(root, text="1", padx=40, pady=20, command=lambda:button_click(1))
@@ -75,8 +102,11 @@ b_add = Button(root, text="+", padx=39, pady=20, command=button_add)
 b_sub = Button(root, text="-", padx=41, pady=20, command=button_sub)
 b_mul = Button(root, text="*", padx=40, pady=20, command=button_mul)
 b_div = Button(root, text="/", padx=41, pady=20, command=button_div)
-b_equal = Button(root, text="=", padx=87, pady=20, command=button_equal)
-b_clear = Button(root, text="Clear", padx=80, pady=20, command=button_clear())
+b_equal = Button(root, text="=", padx=91, pady=20, command=button_equal)
+b_clear = Button(root, text="Clear", padx=80, pady=20, command=button_clear)
+b_sqrt = Button(root, text="√", padx=40, pady=20, command=button_sqrt)
+b_cuberoot = Button(root, text="∛", padx=40, pady=20, command=button_cuberoot)
+b_exp = Button(root, text="exp", padx=40, pady=20, command=button_exp)
 
 #putting buttons on screen with grid()
 b1.grid(row=3, column=0)
@@ -100,5 +130,8 @@ b_equal.grid(row=5, column=1, columnspan=2)
 b_sub.grid(row=6, column=0)
 b_mul.grid(row=6, column=1)
 b_div.grid(row=6, column=2)
+b_sqrt.grid(row=7, column=0)
+b_cuberoot.grid(row=7, column=1)
+b_exp.grid(row=7, column=2)
 
 root.mainloop()
